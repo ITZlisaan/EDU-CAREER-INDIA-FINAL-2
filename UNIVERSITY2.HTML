@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive State-Wise University & College Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for light theme and responsiveness */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Very light gray/almost white */
+            color: #1f2937; /* Dark text for high contrast */
+            min-height: 100vh;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb; /* Light gray line */
+        }
+        .data-table th {
+            background-color: #e5e7eb; /* Light gray header background */
+            color: #1f2937;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .data-table tr:hover td {
+            background-color: #f3f4f6; /* Subtle light hover effect */
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive table wrapping for mobile */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Focus style for accessibility */
+        .collapse-toggle:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Indigo ring */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center mb-10 p-6 bg-indigo-600 rounded-xl shadow-2xl">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white">Comprehensive University & College Directory</h1>
+            <p class="mt-2 text-indigo-200 text-lg">Detailed B.Tech & Management Fees, Organized by State</p>
+        </header>
+
+        <div id="state-directory" class="space-y-6">
+            <!-- Data will be populated here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Combined data structure with all extracted information
+        const universityData = [
+            {
+                state: "Maharashtra",
+                cities: "Pune, Mumbai",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges (Pune)",
+                        headers: ["College", "Course Fee (Per Year)"],
+                        data: [
+                            ["DR. D Y Patil Vidyapeeth, Akurdi", "₹ 1.15 L"],
+                            ["DR. D Y Patil Vidyapeeth, Pimpri, Chinchwade", "₹ 1.35 L"],
+                            ["DR. D Y Patil Vidyapeeth, Tathawade", "₹ 1.50 L"],
+                            ["Ajeenkya D Y Patil University", "₹ 2.25 L"],
+                            ["Bharti Vidyapeeth", "₹ 2.85 L"],
+                            ["MIT- WPU (Main Campus)", "₹ 3.50 L"],
+                            ["MIT, Alandi", "₹ 3.50 L"],
+                            ["MIT, Loni", "₹ 2.85 L"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges (Pune)",
+                        headers: ["College", "Program (AICTE/Affiliation)", "Course Fee (Total)"],
+                        data: [
+                            ["Symbiosis institute of business management (SIBM)", "MBA(AICTE)", "₹ 24.84 L"],
+                            ["All branch mgt colleges of Symbiosis", "MBA/MMS/PGDM (AICTE/MH-CET)", "₹ 2.50 L - 8.75 L"],
+                            ["Indira institute of management", "MBA/MMS (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Indira college of engineering and management", "MBA(AICTE)", "₹ 6.0 L (Approx)"],
+                            ["Balaji institute modern management (BITM)", "MBA(AICTE)", "₹ 11.15 L"],
+                            ["Balaji institute of international business (BIIB)", "MBA(AICTE)", "₹ 10.65 L"],
+                            ["Balaji institute of management and HRD (BMHRD)", "MBA(AICTE)", "₹ 10.65 L"],
+                            ["Bharati Vidyapeeth institute of management", "MBA(AICTE)", "₹ 6.50 L"],
+                            ["Lexicon management institute", "PGDM (AICTE)", "₹ 8.40 L"],
+                            ["International school of business & Media (ISB&M)", "PGDM (AICTE)", "₹ 8.0 L"],
+                            ["International school of management & Research (ISM&R)", "PGDM (AICTE)", "₹ 7.30 L"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges (Mumbai)",
+                        headers: ["College", "Program", "Course Fee (Total)"],
+                        data: [
+                            ["Jamuna Lal Bajaj institute of management studies", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Sydenham institute of management studies and enterpreneurship Education (SIMSREE)", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Welingkar Institute of management, Mumbai", "PGDM (AICTE)/MBA/MMS (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["SIES College of management studies, Mumbai", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Chetana institute of management and research, Mumbai", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Lala Lajpat Rai institute of management, Mumbai", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Rizvi institute of management studies and research (RIMSR)", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["ST Xavier institute of management and research, Mumbai", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Sri Ramdev Baba College of management and Entrepreneurship, Nagpur", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["Atharva institute of management studies, Mumbai", "MBA/MMS (AICTE) (MH-CET)", "₹ 6.0 L (Approx)"],
+                            ["SP Jain institute of management studies, Mumbai", "PGDM (AICTE)", "₹ 19 L"],
+                            ["KJ Somaiya institute of management, Mumbai", "PGDM(AICTE)", "₹ 19 L"],
+                            ["Narsi Munje institute of management studies (NMIMS), Mumbai", "MBA(AICTE)", "₹ 24 L"],
+                            ["ITM Business school, Navi Mumbai", "PGDM (AICTE)", "₹ 10.95 L"],
+                            ["Indian school of Management & Entrepreneurship (ISME), Mumbai", "PGDM (AICTE) (Dual Specialization)", "₹ 9.58 L"],
+                            ["Universal business school, Mumbai", "PGDM (AICTE)", "₹ 8.90 L"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "Karnataka",
+                cities: "Bengaluru",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges (Bengaluru)",
+                        headers: ["College", "Course Fee (Per Year)"],
+                        data: [
+                            ["Manipal Institute of Technology (MIT), Manipal, Udupi", "₹ 4.57 L (Per Year)"],
+                            ["SRM College of Engineering and Technology, Bengaluru", "₹ 2.28 L (Per Year)"],
+                            ["R V College of Engineering, Bengaluru", "₹ 2.64 L (Per Year)"],
+                            ["M S Ramaiah Institute of Technology, Bengaluru", "₹ 2.97 L (MBA) / ₹ 2.50 L (Per Year)"],
+                            ["BMS College of Engineering, Bengaluru", "₹ 2.50 L (Per Year)"],
+                            ["BMS Institute of Technology & Management, Bengaluru", "₹ 2.0 L - 3.0 L (Per Year)"],
+                            ["RVMS Institute of Technology (RVIT), Bengaluru", "₹ 1.50 L - 2.50 L (Per Year)"],
+                            ["Dayanand Sagar University (DSCE), Bengaluru", "₹ 2.25 L - 4.50 L (General Fee) / ₹ 2.25 L (Per Year)"],
+                            ["Nagarjuna University, Bengaluru", "₹ 3.25 L (Per Year)"],
+                            ["East Point College of Engineering and Technology, Bengaluru", "₹ 3.0 L (Per Year)"],
+                            ["New Horizon Institute of Engineering, Bengaluru", "₹ 2.50 L - 3.50 L (Per Year)"],
+                            ["Oxford College of Engineering and Technology, Bengaluru", "₹ 3.55 L (Per Year)"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges (Bengaluru)",
+                        headers: ["College", "Program (AICTE/Affiliation)", "Course Fee (Total)"],
+                        data: [
+                            ["International Academy of management & entrepreneurship (IAME), Bengaluru", "GLOBAL MBA (AICTE)", "₹ 7.56 L"],
+                            ["Karnataka college of management (KCM), Bengaluru", "MBA (AICTE)", "₹ 5.70 L (Including Laptop & International tour)"],
+                            ["International school of business and media (ISB&M), Bengaluru", "PGDM (AICTE)", "₹ 9.60 L"],
+                            ["Jagdish Sheth school of management (JAGSOM - Formally IFIM business school), Bengaluru", "PGDM (AICTE)", "₹ 15.95 L (Including Boarding & Lodging in Hostel)"],
+                            ["Jain university, Bengaluru", "MBA (AICTE)", "₹ 5.75 L"],
+                            ["MS Ramaiah institute of management studies, Bengaluru", "PGDM (AICTE)", "₹ 9.30 L"],
+                            ["International School of Management Excellence (ISME), Bengaluru", "PGDM (AICTE)", "₹ 8.90 L"],
+                            ["Nitte school of business, Bengaluru", "PGDM (AICTE)", "₹ 6.50 L"],
+                            ["ISBR business school, Bengaluru", "PGDM (AICTE) / MBA (AICTE)", "₹ 9.50 L / ₹ 9.50 L"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "Tamil Nadu",
+                cities: "Vellore, Chennai, Tiruchirappalli, Nagercoil, etc.",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges",
+                        headers: ["College / University", "Course Fee (Per Year)"],
+                        data: [
+                            ["Vellore Institute of Technology (VIT), Vellore", "₹ 1.98 L (General Fee)"],
+                            ["SRM IST, Kattankulathur, Chennai", "₹ 4.75 L (General Fee)"],
+                            ["SRM IST, Vada Palani, Chennai", "₹ 3.25 L (General Fee)"],
+                            ["SRM IST, Rama Puram Campus, Chennai", "₹ 2.75 L (General Fee)"],
+                            ["SRM IST, Tiruchirappalli", "₹ 3.00 L (General Fee)"],
+                            ["Amrita VV, Delhi NCR", "₹ 3.25 L (General Fee)"],
+                            ["Amrita VV, Amravati Campus", "₹ 5 L (Per Year)"],
+                            ["Amrita VV, Amrita Puri Campus", "₹ 5 L (Per Year)"],
+                            ["Amrita VV, Bengaluru Campus", "₹ 6 L (Per Year)"],
+                            ["Amrita VV, Coimbatore Campus", "₹ 6 L (Per Year)"],
+                            ["Amrita VV, Chennai Campus", "₹ 5 L (Per Year)"],
+                            ["Amrita VV, Faridabad Campus", "₹ 6 L (Per Year)"],
+                            ["Amrita VV, Nagercoil Campus", "₹ 4 L (Per Year)"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "West Bengal",
+                cities: "Kolkata, Durgapur",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges",
+                        headers: ["College", "Course Fee (Per Sem / Year)"],
+                        data: [
+                            ["IEM, Kolkata", "₹ 81,700 (1st sem) / ₹ 43,250 (2nd-8th sem)"],
+                            ["UEM, Kolkata", "₹ 65,000 (1st sem) / ₹ 43,250 (2nd-8th sem)"],
+                            ["Techno India College, Saltlake", "₹ 79,800 (1st sem)"],
+                            ["Techno India Rajarhat, Kolkata", "₹ 43,250 (2nd-8th sem)"],
+                            ["Heritage, Kolkata", "₹ 72,200 (1st sem) / ₹ 46,200 (2nd-8th sem)"],
+                            ["Netaji Subhash Engineering College (NSEC)", "₹ 74,250 (1st sem) / ₹ 46,200 (2nd-8th sem)"],
+                            ["St. Thomas, Kolkata", "₹ 42,500 (1st sem) / ₹ 42,500 (2nd-8th sem)"],
+                            ["BP Poddar Institute", "₹ 69,900 (1st sem) / ₹ 44,000 (2nd-8th sem)"],
+                            ["Meghnad Saha Institute", "₹ 93,121 (1st sem) / ₹ 55,000 (2nd-8th sem)"],
+                            ["Haldia Institute of Technology", "₹ 75,000 (1st sem) / ₹ 65,000 (2nd-8th sem)"],
+                            ["MCKV Institute of Engineering", "₹ 69,200 (1st sem) / ₹ 40,000 (2nd-8th sem)"],
+                            ["Future Institute", "₹ 72,000 (1st sem) / ₹ 67,600 (2nd-8th sem)"],
+                            ["Kolkata Institute of Information Technology", "₹ 40,000 (1st sem) / ₹ 40,000 (2nd-8th sem)"],
+                            ["Brainware University", "₹ 1.34 L (Per Year)"],
+                            ["Amity University, Kolkata", "₹ 58,000 (Per Sem)"],
+                            ["Pillai Institute of Technology", "₹ 61,000 (1st sem) / ₹ 58,000 (2nd-8th sem)"],
+                            ["NSHM, Knowledge Campus, Durgapur", "₹ 58,000 (1st sem) / ₹ 48,340 (2nd-8th sem)"],
+                            ["Asansol Engineering College", "₹ 75,000 (1st sem) / ₹ 65,000 (2nd-8th sem)"],
+                            ["Dr BC Roy Engineering College", "₹ 65,000 (2nd-8th sem)"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges",
+                        headers: ["College", "Program (AICTE/Affiliation)", "Course Fee (Total)"],
+                        data: [
+                            ["International management institute (IMI), Kolkata", "PGDM (AICTE)", "₹ 13 L"],
+                            ["Praxis business school, Kolkata", "PGDM (AICTE)", "₹ 8.91 L"],
+                            ["International school of business & Media (ISB&M)", "PGDM (AICTE)", "₹ 9.0 L"],
+                            ["Eastern institute of integrate Learning in management (EIILM)", "MBA (AICTE)", "₹ 5.95 L"],
+                            ["Institute of engineering and management (IEM), Kolkata", "MBA (AICTE)", "₹ 6.50 L"],
+                            ["Brainware University, Kolkata", "MBA (AICTE)", "₹ 4.24 L"],
+                            ["NSHM, Knowledge campus, Kolkata", "MBA (AICTE)", "₹ 5.62 L"],
+                            ["NSHM, Knowledge campus, Durgapur", "MBA (AICTE)", "₹ 4.12 L"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "Odisha",
+                cities: "Bhubaneswar, Sambalpur, Berhampur",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges",
+                        headers: ["College", "Course Fee (Per Sem / Year)"],
+                        data: [
+                            ["SUIIT, Burla (Govt. college)", "₹ 95,800 / Year"],
+                            ["KIIT University, Bhubaneswar", "₹ 2,20,000 / Sem"],
+                            ["SOA University (ITER)", "₹ 2,85,000 / Year"],
+                            ["CV Raman, Bhubaneswar", "₹ 1,47,500 / Sem"],
+                            ["Birla Global University, Bhubaneswar", "₹ 1,25,000 / Sem (1st Year) / ₹ 2,40,000 / Year (2nd-4th Year)"],
+                            ["Silicon Institute of Technology, Bhubaneswar", "₹ 1,25,000 / Per Sem"],
+                            ["Silicon Institute of Technology, Sambalpur", "₹ 1,15,000 / Per Year"],
+                            ["Gandhi Institute (GIET), Gunupur", "₹ 1,91,000 / Per Year"],
+                            ["Gandhi Institute of Technology (GITA), Bhubaneswar", "₹ 1,45,000 / Per Year"],
+                            ["Gandhi engineering college (GEC), Bhubaneswar", "₹ 1,52,000 / Per Year"],
+                            ["Gandhi Institute for Technology (GIFT), Bhubaneswar", "₹ 1,25,000 / Per Year"],
+                            ["Gandhi Institute of education and technology (GIET), Baniyaratangi, Bhubaneswar", "₹ 1,25,000 / Per Year"],
+                            ["Gandhi Institute of excellent Technocrats (GIET), Gangapatna, Bhubaneswar", "₹ 1,05,000 / Per Year"],
+                            ["The Gandhi Institute of Technology & Management (GITAM), Bhubaneswar", "₹ 1,05,000 / Per Year"],
+                            ["NIST University, Berhampur Odisha", "₹ 1,15,000 / Per Year"],
+                            ["Trident Academy of Technology, Bhubaneswar", "₹ 1,10,000 / Per Year"],
+                            ["Centurion University, Bhubaneswar", "₹ 1,50,000 / Per Year"],
+                            ["RITE, Bhubaneswar", "₹ 70,000 / Per Year"],
+                            ["Einstein Group of Institution, Bhubaneswar", "₹ 69,000 / Per Year"],
+                            ["Nalanda Institute of Technology, Bhubaneswar", "₹ 1,00,000 / Per Year"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges",
+                        headers: ["College", "Program (AICTE/Affiliation)", "Course Fee (Total)"],
+                        data: [
+                            ["International management institute (IMI)", "PGDM (AICTE)", "₹ 12.50 L"],
+                            ["Institute of mgt and information science (IMIS)", "PGDM (AICTE)", "₹ 5.48 L"],
+                            ["Birla global university (BGU)", "MBA (AICTE)", "₹ 7.50 L"],
+                            ["KIIT, School of management", "MBA (AICTE)/SUPER MBA", "₹ 16.90 L (Including tuition fee/hostel and all)"],
+                            ["SOA University, Bhubaneswar", "MBA (AICTE)", "₹ 7.0 L"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "Delhi - NCR / Rajasthan / Uttarakhand",
+                cities: "Delhi, Greater Noida, Gurgaon, Meerut, Roorkee, Dehradun, Jaipur",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges",
+                        headers: ["College / University", "Course Fee (Per Year)"],
+                        data: [
+                            ["Galgotia University, Greater Noida", "₹ 1.49 L"],
+                            ["Galgotia College, Greater Noida", "₹ 1.15 L"],
+                            ["KR Mangalam University, Gurgaon Haryana", "₹ 1.85 L"],
+                            ["IIMT University, Meerut", "₹ 1.36 L"],
+                            ["Greater Noida Institute of Technology (GNIOT)", "₹ 1.44 L"],
+                            ["Neelkanth Group of Institution, Meerut", "₹ 85,000"],
+                            ["Uttaranchal University, Uttarakhand", "₹ 2.20 L"],
+                            ["Roorkee Institute of Technology (RIT)", "₹ 1.10 L"],
+                            ["Roorkee College of Engineering (RCE)", "₹ 1.10 L"],
+                            ["University of Petroleum & Energy Studies (UPES), Dehradun", "₹ 4.35 L"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges",
+                        headers: ["College", "Program", "Course Fee (Total)"],
+                        data: [
+                            ["International Management Institute (IMI), Delhi", "PGDM (AICTE)", "₹ 17 L"],
+                            ["BIMTECH, Greater Noida", "PGDM (AICTE)", "₹ 17 L"],
+                            ["Greater Noida Institute of Management Studies (GIMS), Noida", "PGDM/MBA(AICTE)", "₹ 7.38 L (PGDM) / ₹ 2.97 L (MBA)"],
+                            ["Jaipuria school of business, Ghaziabad", "PGDM (AICTE)", "₹ 8.2 L"],
+                            ["ISBM business school, Jaipur, Rajasthan", "PGDM (AICTE)", "₹ 10.20 L"],
+                            ["RIT, Roorkee, Uttarakhand", "MBA++ / MBA GLOBAL", "₹ 4 L / ₹ 5.50 L"],
+                        ]
+                    }
+                ]
+            },
+            {
+                state: "Jharkhand",
+                cities: "Ranchi, Jamshedpur",
+                sections: [
+                    {
+                        title: "B.Tech (4-Years) Colleges",
+                        headers: ["College / University", "Course Fee (Per Sem)"],
+                        data: [
+                            ["Amity University, Ranchi", "₹ 50,000"],
+                            ["Sri Nath University, Jamshedpur", "₹ 50,000"],
+                        ]
+                    },
+                    {
+                        title: "MBA/PGDM Management (2-Years) Colleges",
+                        headers: ["College", "Program (AICTE/Affiliation)", "Course Fee (Total)"],
+                        data: [
+                            ["XISS, Ranchi", "PGDM (AICTE)", "₹ 10.30 L"],
+                            ["BIT Meshra, Ranchi", "MBA (AICTE)", "₹ 6.30 L"],
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Function to create the HTML structure for a single college section
+        function createCollegeTable(section) {
+            let tableHTML = `
+                <h3 class="text-xl font-semibold mt-6 mb-3 text-indigo-700">${section.title}</h3>
+                <div class="table-responsive bg-white border border-gray-200 rounded-lg shadow-xl">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                ${section.headers.map(header => `<th class="sticky top-0">${header}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${section.data.map(row => `
+                                <tr>
+                                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            return tableHTML;
+        }
+
+        // Function to create the full state accordion/collapse element
+        function createStateSection(stateData) {
+            const id = stateData.state.replace(/[\s\/\-]/g, '').toLowerCase(); // Sanitize ID for complex state names
+            const contentId = `${id}-content`;
+
+            let sectionsHTML = stateData.sections.map(createCollegeTable).join('');
+
+            // Updated classes for light theme
+            return `
+                <div class="bg-white border border-gray-300 rounded-xl shadow-2xl overflow-hidden">
+                    <button id="${id}" class="collapse-toggle w-full p-6 text-left flex justify-between items-center text-2xl font-extrabold bg-indigo-50 hover:bg-indigo-100 transition duration-150 text-indigo-800 border-b border-gray-200" aria-expanded="false" aria-controls="${contentId}">
+                        <span>${stateData.state} <span class="text-base font-medium text-gray-600">(${stateData.cities})</span></span>
+                        <svg class="w-7 h-7 transform transition-transform duration-300 rotate-0 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div id="${contentId}" class="p-6 transition-all duration-300 ease-in-out hidden">
+                        ${sectionsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main rendering function
+        function renderDirectory() {
+            const directory = document.getElementById('state-directory');
+            directory.innerHTML = universityData.map(createStateSection).join('');
+        }
+
+        // Event listener for toggling the collapsible sections
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDirectory();
+
+            const collapseToggles = document.querySelectorAll('.collapse-toggle');
+
+            collapseToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const contentId = toggle.getAttribute('aria-controls');
+                    const content = document.getElementById(contentId);
+                    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                    const icon = toggle.querySelector('svg');
+
+                    // Close all other open sections
+                    document.querySelectorAll('.collapse-toggle[aria-expanded="true"]').forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                            document.getElementById(otherToggle.getAttribute('aria-controls')).classList.add('hidden');
+                            otherToggle.querySelector('svg').classList.remove('rotate-180');
+                        }
+                    });
+
+                    // Toggle current section
+                    toggle.setAttribute('aria-expanded', !isExpanded);
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180', !isExpanded);
+                });
+            });
+
+            // Open the first state by default for a better initial view
+            if (collapseToggles.length > 0) {
+                collapseToggles[0].click();
+            }
+        });
+    </script>
+</body>
+</html>
